@@ -1,6 +1,5 @@
 import express from "express";
 import { DeleteStudentData, UpdateStudentData, addStudentsData, getAllStudents, getStudentsById } from "../Controllers/students.js";
-import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -11,12 +10,6 @@ let router=express.Router();
 router.get("/data",async (req,res)=>{
     try {
 
-        let token=req.headers["auth-token"];
-        if(!token){
-            return res.status(400).json({data:"Invalid Authorization"})
-            
-        }
-        let validUser=jwt.verify(token,process.env.SECRET_KEY)
         let students=await getAllStudents(req)
         if(!students){
             res.sendStatus(400).json({data:"User Not Found"})
